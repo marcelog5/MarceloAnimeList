@@ -2,7 +2,7 @@
 {
     public class Anime : Media
     {
-        public int EpisodeCount { get; set; }
-        public int Season { get; set; }
+        public int? EpisodeCount { get; set; }
+        public int? Season { get; set; }
     }
 }

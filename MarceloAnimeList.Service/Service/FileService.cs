@@ -1,6 +1,7 @@
 ﻿using MarceloAnimeList.Domain.Entity;
-using MarceloAnimeList.Domain.Enum;
 using MarceloAnimeList.Domain.Service;
+using MarceloAnimeList.Service.Command.FileParse;
+using MarceloAnimeList.Service.Command.FileParse.AnimeParse;
 using System.Text.RegularExpressions;
 
 namespace MarceloAnimeList.Service.Service
@@ -29,8 +30,11 @@ namespace MarceloAnimeList.Service.Service
             {
                 // Parse paused anime entries
                 string pausedAnimeText = pausedAnimeMatch.Groups[1].Value;
-                //var pausedAnimes = ParseAnimeEntries(pausedAnimeText, EnMediaStatus.Completed);
-                //animes.AddRange(pausedAnimes);
+
+                IMediaParser<Anime> pausedAnimeParser = new PausedAnimeParser();
+                var pausedAnimes = pausedAnimeParser.HandleParser(pausedAnimeText);
+                
+                animes.AddRange(pausedAnimes);
             }
 
             if (watchedAnimeMatch.Success)
@@ -42,15 +46,6 @@ namespace MarceloAnimeList.Service.Service
             }
 
             return animes;
-        }
-
-        public static List<Anime> ParseAnimeEntries(string text, EnMediaStatus status)
-        {
-            var animeList = new List<Anime>();
-
-            
-
-            return animeList;
         }
     }
 }

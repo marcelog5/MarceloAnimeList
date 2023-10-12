@@ -2,11 +2,11 @@
 
 namespace MarceloAnimeList.Domain.Entity
 {
-    public class UserMedia
+    public class UserAnime
     {
         public EnUserMediaStatus Status { get; set; }
-        public int MediaEpisode { get; set; }
-        public int MediaSequence { get; set; }
+        public int Episode { get; set; }
+        public int Season { get; set; }
         public Guid UserId { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<Media> Media { get; set; }

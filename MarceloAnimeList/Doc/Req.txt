@@ -1,9 +1,9 @@
 ﻿1-Importar Lista
 2-calendario do q vai lançar
 3-calendario da semana
-4-notificação de quando vai lançar meu anime
+4-notificação de quando vai lançar
 5-Comando Por voz
-6-ChatGpt pra saber o anime
+6-ChatGpt pra busca
 7-interface Web contendo a lista de anime
 
 // futuros
