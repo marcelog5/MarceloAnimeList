@@ -39,10 +39,13 @@ namespace MarceloAnimeList.Service.Service
 
             if (watchedAnimeMatch.Success)
             {
-                // Parse watched anime entries
+                // Parse paused anime entries
                 string watchedAnimeText = watchedAnimeMatch.Groups[1].Value;
-                //var watchedAnimes = ParseAnimeEntries(watchedAnimeText, EnMediaStatus.Completed);
-                //animes.AddRange(watchedAnimes);
+
+                IMediaParser<Anime> watchedAnimeParser = new WatchedAnimeParser();
+                var watchedAnimes = watchedAnimeParser.HandleParser(watchedAnimeText);
+
+                animes.AddRange(watchedAnimes);
             }
 
             return animes;

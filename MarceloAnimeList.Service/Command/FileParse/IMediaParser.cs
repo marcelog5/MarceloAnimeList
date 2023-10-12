@@ -1,7 +1,7 @@
 ﻿namespace MarceloAnimeList.Service.Command.FileParse
 {
-    public interface IMediaParser<TResponse>
+    public interface IMediaParser<TMedia>
     {
-        List<TResponse> HandleParser(string content);
+        IList<TMedia> HandleParser(string content);
     }
 }

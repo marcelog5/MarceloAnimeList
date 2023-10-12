@@ -2,36 +2,26 @@
 
 namespace MarceloAnimeList.Service.Command.FileParse.AnimeParse
 {
-    public class PausedAnimeParser : IMediaParser<Anime>
+    public class PausedAnimeParser : TemplateMediaParser<Anime>
     {
-        public List<Anime> HandleParser(string content)
+        protected override Anime parseMediaLine(string line)
         {
-            List<Anime> pausedAnimeList = new List<Anime>();
+            string[] parts = line.Split(new string[] { "ep:" }, StringSplitOptions.None);
 
-            string[] pausedAnimeLines = content.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-            pausedAnimeLines = pausedAnimeLines.Where(pal => !(string.IsNullOrWhiteSpace(pal) && pal.Contains("\r"))).ToArray(); 
+            // Extract the title and episode from the matched groups
+            string title = parts[0].Trim();
+            int episode = 0;
 
-            foreach (var line in pausedAnimeLines)
+            if (parts.Length == 2)
+                episode = int.Parse(parts[1].Trim());
+
+            // Create an Anime object with the title
+            Anime anime = new Anime
             {
-                string[] parts = line.Replace("\r","").Split(new string[] { "ep:" }, StringSplitOptions.None);
+                Title = title
+            };
 
-                // Extract the title and episode from the matched groups
-                string title = parts[0].Trim();
-                int episode = 0;
-
-                if (parts.Length == 2)
-                    episode = int.Parse(parts[1].Trim());
-
-                // Create an Anime object with the title
-                Anime anime = new Anime
-                {
-                    Title = title
-                };
-
-                pausedAnimeList.Add(anime);
-            }
-
-            return pausedAnimeList;
+            return anime;
         }
     }
 }
