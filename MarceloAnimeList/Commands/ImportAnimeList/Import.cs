@@ -1,5 +1,7 @@
 ﻿using Commom.DomainLayer.Command;
+using MarceloAnimeList.Domain.Entity;
 using MarceloAnimeList.Domain.Service;
+using System.Text;
 
 namespace MarceloAnimeList.Commands.ImportAnimeList
 {
@@ -28,7 +30,9 @@ namespace MarceloAnimeList.Commands.ImportAnimeList
                 if (File.Exists(filePath))
                 {
                     // Realize a leitura do arquivo
-                    string content = File.ReadAllText(filePath);
+                    string content = File.ReadAllText(filePath, Encoding.GetEncoding("ISO-8859-1"));
+
+                    List<Media> medias = _fileService.Parser(content);
 
                     // Exiba o conteúdo do arquivo
                     Console.WriteLine("Conteúdo do arquivo:");
