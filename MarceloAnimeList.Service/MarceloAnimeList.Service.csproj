@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MarceloAnimeList.Domain\MarceloAnimeList.Domain.csproj" />
+    <Folder Include="Command\FileParse\MovieParse\" />
+    <Folder Include="Command\FileParse\MangaParse\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Command\FileParse\MovieParse\" />
-    <Folder Include="Command\FileParse\MangaParse\" />
+    <ProjectReference Include="..\MarceloAnimeList.Infra\MarceloAnimeList.Infra.csproj" />
   </ItemGroup>
 
 </Project>

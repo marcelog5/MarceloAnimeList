@@ -1,7 +1,15 @@
-﻿namespace MarceloAnimeList.Domain.Entity
+﻿using CarRare.Commom.DomainLayer.Data;
+
+namespace MarceloAnimeList.Domain.Entity
 {
-    public class User
+    public class User : IDomainEntity
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public bool Active { get; set; }
+        public ICollection<Rating> Ratings { get; set; }
+        public ICollection<UserAnime> UserAnimes { get; set; }
     }
 }

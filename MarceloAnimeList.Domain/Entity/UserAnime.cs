@@ -1,15 +1,19 @@
-﻿using MarceloAnimeList.Domain.Enum;
+﻿using CarRare.Commom.DomainLayer.Data;
+using MarceloAnimeList.Domain.Enum;
 
 namespace MarceloAnimeList.Domain.Entity
 {
-    public class UserAnime
+    public class UserAnime : IDomainEntity
     {
+        public Guid Id { get; set; }
         public EnUserMediaStatus Status { get; set; }
         public int? Episode { get; set; }
         public int Season { get; set; }
-        public Rating? Rate { get; set; }
         public Guid UserId { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public bool Active { get; set; }
         public virtual User User { get; set; }
-        public virtual ICollection<Media> Media { get; set; }
+        public virtual ICollection<Anime> Anime { get; set; }
     }
 }
