@@ -1,4 +1,4 @@
-﻿using MarceloAnimeList.Domain.Entity;
+﻿using MarceloAnimeList.Domain.Data.Entity;
 using MarceloAnimeList.Infra._4._1_Data.Mapping;
 using Microsoft.EntityFrameworkCore;
 

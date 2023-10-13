@@ -1,4 +1,4 @@
-﻿using MarceloAnimeList.Domain.Entity;
+﻿using MarceloAnimeList.Domain.Data.Entity;
 using MarceloAnimeList.Domain.Service;
 using MarceloAnimeList.Service.Command.FileParse;
 using MarceloAnimeList.Service.Command.FileParse.AnimeParse;

@@ -1,5 +1,5 @@
 ﻿using Commom.DomainLayer.Command;
-using MarceloAnimeList.Domain.Entity;
+using MarceloAnimeList.Domain.Data.Entity;
 using MarceloAnimeList.Domain.Service;
 using System.Text;
 

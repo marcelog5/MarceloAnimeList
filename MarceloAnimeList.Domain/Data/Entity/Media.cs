@@ -1,7 +1,7 @@
 ﻿using CarRare.Commom.DomainLayer.Data;
 using MarceloAnimeList.Domain.Enum;
 
-namespace MarceloAnimeList.Domain.Entity
+namespace MarceloAnimeList.Domain.Data.Entity
 {
     public class Media : IDomainEntity
     {

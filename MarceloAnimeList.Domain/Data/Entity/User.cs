@@ -1,6 +1,6 @@
 ﻿using CarRare.Commom.DomainLayer.Data;
 
-namespace MarceloAnimeList.Domain.Entity
+namespace MarceloAnimeList.Domain.Data.Entity
 {
     public class User : IDomainEntity
     {

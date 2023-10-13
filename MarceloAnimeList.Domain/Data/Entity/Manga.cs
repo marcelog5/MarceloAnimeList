@@ -1,4 +1,4 @@
-﻿namespace MarceloAnimeList.Domain.Entity
+﻿namespace MarceloAnimeList.Domain.Data.Entity
 {
     public class Manga : Media
     {

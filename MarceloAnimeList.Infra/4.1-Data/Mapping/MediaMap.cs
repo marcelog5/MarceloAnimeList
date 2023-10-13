@@ -1,6 +1,6 @@
-﻿using MarceloAnimeList.Domain.Entity;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using MarceloAnimeList.Domain.Data.Entity;
 
 namespace MarceloAnimeList.Infra._4._1_Data.Mapping
 {
