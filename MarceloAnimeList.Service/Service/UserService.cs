@@ -25,7 +25,7 @@ namespace MarceloAnimeList.Service.Service
         {
             User user = _mapper.Map<User>(command);
 
-            _userRepository.CreateAsync(user);
+            await _userRepository.CreateAsync(user);
 
             return new CreateUserCommandResult()
             {

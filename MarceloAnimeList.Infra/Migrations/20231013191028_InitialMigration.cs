@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace MarceloAnimeList.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateAnime : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,6 +42,25 @@ namespace MarceloAnimeList.Infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Anime",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EpisodeCount = table.Column<int>(type: "int", nullable: true),
+                    Season = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Anime", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Anime_Media_Id",
+                        column: x => x.Id,
+                        principalTable: "Media",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,8 +108,8 @@ namespace MarceloAnimeList.Infra.Migrations
                     Type = table.Column<int>(type: "int", nullable: false),
                     Score = table.Column<double>(type: "float", nullable: true),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false)
@@ -101,14 +121,12 @@ namespace MarceloAnimeList.Infra.Migrations
                         name: "FK_Rating_Media_MediaId",
                         column: x => x.MediaId,
                         principalTable: "Media",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Rating_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -119,51 +137,26 @@ namespace MarceloAnimeList.Infra.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     Episode = table.Column<int>(type: "int", nullable: true),
                     Season = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Active = table.Column<bool>(type: "bit", nullable: false)
+                    Active = table.Column<bool>(type: "bit", nullable: false),
+                    AnimeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserAnime", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_UserAnime_Anime_AnimeId",
+                        column: x => x.AnimeId,
+                        principalTable: "Anime",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_UserAnime_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Anime",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EpisodeCount = table.Column<int>(type: "int", nullable: true),
-                    Season = table.Column<int>(type: "int", nullable: true),
-                    UserAnimeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Anime", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Anime_Media_Id",
-                        column: x => x.Id,
-                        principalTable: "Media",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Anime_UserAnime_UserAnimeId",
-                        column: x => x.UserAnimeId,
-                        principalTable: "UserAnime",
                         principalColumn: "Id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Anime_UserAnimeId",
-                table: "Anime",
-                column: "UserAnimeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rating_MediaId",
@@ -176,6 +169,11 @@ namespace MarceloAnimeList.Infra.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserAnime_AnimeId",
+                table: "UserAnime",
+                column: "AnimeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserAnime_UserId",
                 table: "UserAnime",
                 column: "UserId");
@@ -184,9 +182,6 @@ namespace MarceloAnimeList.Infra.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Anime");
-
             migrationBuilder.DropTable(
                 name: "Manga");
 
@@ -200,10 +195,13 @@ namespace MarceloAnimeList.Infra.Migrations
                 name: "UserAnime");
 
             migrationBuilder.DropTable(
-                name: "Media");
+                name: "Anime");
 
             migrationBuilder.DropTable(
                 name: "User");
+
+            migrationBuilder.DropTable(
+                name: "Media");
         }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarceloAnimeList.Infra.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231013140113_CreateAnime")]
-    partial class CreateAnime
+    [Migration("20231013191028_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace MarceloAnimeList.Infra.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("MarceloAnimeList.Domain.Entity.Media", b =>
+            modelBuilder.Entity("MarceloAnimeList.Domain.Data.Entity.Media", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,12 +55,12 @@ namespace MarceloAnimeList.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Media");
+                    b.ToTable("Media", (string)null);
 
                     b.UseTptMappingStrategy();
                 });
 
-            modelBuilder.Entity("MarceloAnimeList.Domain.Entity.Rating", b =>
+            modelBuilder.Entity("MarceloAnimeList.Domain.Data.Entity.Rating", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -75,7 +75,7 @@ namespace MarceloAnimeList.Infra.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("MediaId")
+                    b.Property<Guid?>("MediaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double?>("Score")
@@ -87,7 +87,7 @@ namespace MarceloAnimeList.Infra.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -96,10 +96,10 @@ namespace MarceloAnimeList.Infra.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Rating");
+                    b.ToTable("Rating", (string)null);
                 });
 
-            modelBuilder.Entity("MarceloAnimeList.Domain.Entity.User", b =>
+            modelBuilder.Entity("MarceloAnimeList.Domain.Data.Entity.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -120,10 +120,10 @@ namespace MarceloAnimeList.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
                 });
 
-            modelBuilder.Entity("MarceloAnimeList.Domain.Entity.UserAnime", b =>
+            modelBuilder.Entity("MarceloAnimeList.Domain.Data.Entity.UserAnime", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -131,6 +131,9 @@ namespace MarceloAnimeList.Infra.Migrations
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("AnimeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -147,19 +150,21 @@ namespace MarceloAnimeList.Infra.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AnimeId");
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserAnime");
+                    b.ToTable("UserAnime", (string)null);
                 });
 
-            modelBuilder.Entity("MarceloAnimeList.Domain.Entity.Anime", b =>
+            modelBuilder.Entity("MarceloAnimeList.Domain.Data.Entity.Anime", b =>
                 {
-                    b.HasBaseType("MarceloAnimeList.Domain.Entity.Media");
+                    b.HasBaseType("MarceloAnimeList.Domain.Data.Entity.Media");
 
                     b.Property<int?>("EpisodeCount")
                         .HasColumnType("int");
@@ -167,17 +172,12 @@ namespace MarceloAnimeList.Infra.Migrations
                     b.Property<int?>("Season")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("UserAnimeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasIndex("UserAnimeId");
-
                     b.ToTable("Anime", (string)null);
                 });
 
-            modelBuilder.Entity("MarceloAnimeList.Domain.Entity.Manga", b =>
+            modelBuilder.Entity("MarceloAnimeList.Domain.Data.Entity.Manga", b =>
                 {
-                    b.HasBaseType("MarceloAnimeList.Domain.Entity.Media");
+                    b.HasBaseType("MarceloAnimeList.Domain.Data.Entity.Media");
 
                     b.Property<int>("Chapter")
                         .HasColumnType("int");
@@ -185,95 +185,86 @@ namespace MarceloAnimeList.Infra.Migrations
                     b.Property<int>("Pages")
                         .HasColumnType("int");
 
-                    b.ToTable("Manga");
+                    b.ToTable("Manga", (string)null);
                 });
 
-            modelBuilder.Entity("MarceloAnimeList.Domain.Entity.Movie", b =>
+            modelBuilder.Entity("MarceloAnimeList.Domain.Data.Entity.Movie", b =>
                 {
-                    b.HasBaseType("MarceloAnimeList.Domain.Entity.Media");
+                    b.HasBaseType("MarceloAnimeList.Domain.Data.Entity.Media");
 
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
-                    b.ToTable("Movie");
+                    b.ToTable("Movie", (string)null);
                 });
 
-            modelBuilder.Entity("MarceloAnimeList.Domain.Entity.Rating", b =>
+            modelBuilder.Entity("MarceloAnimeList.Domain.Data.Entity.Rating", b =>
                 {
-                    b.HasOne("MarceloAnimeList.Domain.Entity.Media", "Media")
+                    b.HasOne("MarceloAnimeList.Domain.Data.Entity.Media", "Media")
                         .WithMany("Ratings")
-                        .HasForeignKey("MediaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MediaId");
 
-                    b.HasOne("MarceloAnimeList.Domain.Entity.User", "User")
+                    b.HasOne("MarceloAnimeList.Domain.Data.Entity.User", "User")
                         .WithMany("Ratings")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Media");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MarceloAnimeList.Domain.Entity.UserAnime", b =>
+            modelBuilder.Entity("MarceloAnimeList.Domain.Data.Entity.UserAnime", b =>
                 {
-                    b.HasOne("MarceloAnimeList.Domain.Entity.User", "User")
+                    b.HasOne("MarceloAnimeList.Domain.Data.Entity.Anime", "Anime")
+                        .WithMany()
+                        .HasForeignKey("AnimeId");
+
+                    b.HasOne("MarceloAnimeList.Domain.Data.Entity.User", "User")
                         .WithMany("UserAnimes")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Anime");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MarceloAnimeList.Domain.Entity.Anime", b =>
+            modelBuilder.Entity("MarceloAnimeList.Domain.Data.Entity.Anime", b =>
                 {
-                    b.HasOne("MarceloAnimeList.Domain.Entity.Media", null)
+                    b.HasOne("MarceloAnimeList.Domain.Data.Entity.Media", null)
                         .WithOne()
-                        .HasForeignKey("MarceloAnimeList.Domain.Entity.Anime", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MarceloAnimeList.Domain.Entity.UserAnime", null)
-                        .WithMany("Anime")
-                        .HasForeignKey("UserAnimeId");
-                });
-
-            modelBuilder.Entity("MarceloAnimeList.Domain.Entity.Manga", b =>
-                {
-                    b.HasOne("MarceloAnimeList.Domain.Entity.Media", null)
-                        .WithOne()
-                        .HasForeignKey("MarceloAnimeList.Domain.Entity.Manga", "Id")
+                        .HasForeignKey("MarceloAnimeList.Domain.Data.Entity.Anime", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MarceloAnimeList.Domain.Entity.Movie", b =>
+            modelBuilder.Entity("MarceloAnimeList.Domain.Data.Entity.Manga", b =>
                 {
-                    b.HasOne("MarceloAnimeList.Domain.Entity.Media", null)
+                    b.HasOne("MarceloAnimeList.Domain.Data.Entity.Media", null)
                         .WithOne()
-                        .HasForeignKey("MarceloAnimeList.Domain.Entity.Movie", "Id")
+                        .HasForeignKey("MarceloAnimeList.Domain.Data.Entity.Manga", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MarceloAnimeList.Domain.Entity.Media", b =>
+            modelBuilder.Entity("MarceloAnimeList.Domain.Data.Entity.Movie", b =>
+                {
+                    b.HasOne("MarceloAnimeList.Domain.Data.Entity.Media", null)
+                        .WithOne()
+                        .HasForeignKey("MarceloAnimeList.Domain.Data.Entity.Movie", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MarceloAnimeList.Domain.Data.Entity.Media", b =>
                 {
                     b.Navigation("Ratings");
                 });
 
-            modelBuilder.Entity("MarceloAnimeList.Domain.Entity.User", b =>
+            modelBuilder.Entity("MarceloAnimeList.Domain.Data.Entity.User", b =>
                 {
                     b.Navigation("Ratings");
 
                     b.Navigation("UserAnimes");
-                });
-
-            modelBuilder.Entity("MarceloAnimeList.Domain.Entity.UserAnime", b =>
-                {
-                    b.Navigation("Anime");
                 });
 #pragma warning restore 612, 618
         }

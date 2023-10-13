@@ -17,7 +17,13 @@ namespace MarceloAnimeList.Infra._4._1_Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Media>(new MediaMap().Configure);
+            modelBuilder.Entity<User>(new UserMap().Configure);
             modelBuilder.Entity<Anime>(new AnimeMap().Configure);
+            modelBuilder.Entity<Manga>(new MangaMap().Configure);
+            modelBuilder.Entity<Movie>(new MovieMap().Configure);
+            modelBuilder.Entity<Rating>(new RatingMap().Configure);
+            modelBuilder.Entity<UserAnime>(new UserAnimeMap().Configure);
         }
 
         public DbSet<Media> Media { get; set; }

@@ -30,11 +30,11 @@ builder.Services.AddSingleton<IMapper>(sp =>
     {
         cfg.CreateMap<CreateUserRequest, CreateUserCommand>();
         cfg.CreateMap<CreateUserCommand, User>();
+        cfg.CreateMap<User, CreateUserCommandResponse>();
     });
 
     return configuration.CreateMapper();
 });
-
 
 // Read the connection string from appsettings.json
 IConfiguration DBConfig = builder.Configuration.GetSection("ConnectionStrings");
@@ -42,7 +42,7 @@ IConfiguration DBConfig = builder.Configuration.GetSection("ConnectionStrings");
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(DBConfig.GetConnectionString("DefaultConnection"));
-});
+}, ServiceLifetime.Scoped);
 
 // Repository
 builder.Services.AddTransient<IUserRepository, UserRepository>();

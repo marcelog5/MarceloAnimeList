@@ -17,11 +17,6 @@ namespace MarceloAnimeList.Infra._4._1_Data.Mapping
             builder.Property(x => x.CreatedAt);
             builder.Property(x => x.UpdatedAt);
             builder.Property(x => x.Active);
-
-            builder.HasMany(x => x.Ratings)
-                .WithOne();
-            builder.HasMany(x => x.UserAnimes)
-                .WithOne();
         }
     }
 }

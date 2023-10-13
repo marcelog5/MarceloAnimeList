@@ -8,8 +8,8 @@ namespace MarceloAnimeList.Domain.Data.Entity
         public string Name { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public bool Active { get; set; }
-        public ICollection<Rating> Ratings { get; set; }
-        public ICollection<UserAnime> UserAnimes { get; set; }
+        public bool Active { get; set; } = true;
+        public ICollection<Rating>? Ratings { get; set; }
+        public ICollection<UserAnime>? UserAnimes { get; set; }
     }
 }

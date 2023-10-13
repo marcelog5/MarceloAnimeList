@@ -19,12 +19,6 @@ namespace MarceloAnimeList.Infra._4._1_Data.Mapping
             builder.Property(x => x.CreatedAt);
             builder.Property(x => x.UpdatedAt);
             builder.Property(x => x.Active);
-
-            builder.HasMany(x => x.Anime)
-                .WithOne();
-            builder.HasOne(x => x.User)
-                .WithMany()
-                .HasForeignKey(x => x.UserId);
         }
     }
 }

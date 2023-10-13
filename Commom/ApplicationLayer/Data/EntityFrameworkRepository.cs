@@ -27,9 +27,15 @@ namespace CarRare.Commom.ApplicationLayer.Data
 
         public async Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
-            _dbContext.Set<TEntity>().Add(entity);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-            return entity;
+            try
+            {
+                _dbContext.Set<TEntity>().Add(entity);
+                await _dbContext.SaveChangesAsync(cancellationToken);
+                return entity;
+            }catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
