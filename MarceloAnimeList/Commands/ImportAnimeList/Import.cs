@@ -7,24 +7,21 @@ namespace MarceloAnimeList.Commands.ImportAnimeList
 {
     public class Import : ICLICommand
     {
-        private readonly string[] _args;
         private readonly IFileService _fileService;
 
         public Import
         (
-            IFileService fileService,
-            string[] args
+            IFileService fileService
         )
         {
             _fileService = fileService;
-            _args = args;
         }
 
-        public void Execute()
+        public void Execute(string[] args)
         {
             try
             {
-                string filePath = _args[1];
+                string filePath = args[1];
 
                 // Verifique se o arquivo existe
                 if (File.Exists(filePath))

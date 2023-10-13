@@ -8,13 +8,13 @@ namespace MarceloAnimeList.Domain.Data.Entity
         public Guid Id { get; set; }
         public EnUserMediaStatus Status { get; set; }
         public int? Episode { get; set; }
-        public int Season { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public int? Season { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
-        public bool Active { get; set; }
-        public Guid? AnimeId { get; set; }
-        public Guid? UserId { get; set; }
-        public virtual User? User { get; set; }
-        public virtual Anime? Anime { get; set; }
+        public bool Active { get; set; } = true;
+        public Guid AnimeId { get; set; }
+        public Guid UserId { get; set; }
+        public virtual User User { get; set; }
+        public virtual Anime Anime { get; set; }
     }
 }

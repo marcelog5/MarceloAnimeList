@@ -2,9 +2,9 @@
 
 namespace MarceloAnimeList.Service.Command.FileParse.AnimeParse
 {
-    public class WatchedAnimeParser : TemplateMediaParser<Anime>
+    public class WatchedAnimeParser : TemplateMediaParser<UserAnime>
     {
-        protected override Anime parseMediaLine(string line)
+        protected override UserAnime parseMediaLine(string line)
         {
             string[] parts = line.Split(new string[] { " - ", "(", "/", ")", ";", ";", ";" }, StringSplitOptions.None)
                 .Where(l => !string.IsNullOrEmpty(l)).ToArray();
@@ -16,16 +16,17 @@ namespace MarceloAnimeList.Service.Command.FileParse.AnimeParse
 
             string episodeInfo = parts[4].Trim();
 
-            Anime anime = new Anime()
+            UserAnime userAnime = new UserAnime
             {
-                Title = title,
+                Anime = new Anime { Title = title }
             };
+
 
             Console.WriteLine($"Title: {title}");
             Console.WriteLine($"Episode Info: {episodeInfo}");
             Console.WriteLine();
 
-            return anime;
+            return userAnime;
         }
     }
 }

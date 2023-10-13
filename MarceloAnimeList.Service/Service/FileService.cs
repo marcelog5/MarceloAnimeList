@@ -10,13 +10,13 @@ namespace MarceloAnimeList.Service.Service
     {
         public List<Media> Parser(string content)
         {
-            var animes = ParseAnimeText(content);
+            var animes = ParseUserAnimeText(content);
             return new List<Media>();
         }
 
-        public static List<Anime> ParseAnimeText(string inputText)
+        public static List<UserAnime> ParseUserAnimeText(string inputText)
         {
-            List<Anime> animes = new List<Anime>();
+            List<UserAnime> userAnimes = new List<UserAnime>();
 
             var sectionParsers = new Dictionary<string, Type>
             {
@@ -32,12 +32,12 @@ namespace MarceloAnimeList.Service.Service
                 if (match.Success)
                 {
                     string sectionText = match.Groups[1].Value;
-                    var parser = (IMediaParser<Anime>)Activator.CreateInstance(typeof(IMediaParser<>).MakeGenericType(parserType));
-                    animes.AddRange(parser.HandleParser(sectionText));
+                    var parser = (IMediaParser<UserAnime>)Activator.CreateInstance(typeof(IMediaParser<>).MakeGenericType(parserType));
+                    userAnimes.AddRange(parser.HandleParser(sectionText));
                 }
             }
 
-            return animes;
+            return userAnimes;
         }
     }
 

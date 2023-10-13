@@ -4,6 +4,7 @@
     {
         PlanToWatch = 1,
         CurrentlyWatching = 2,
-        Completed = 3
+        StopWatching = 3,
+        Completed = 4
     }
 }

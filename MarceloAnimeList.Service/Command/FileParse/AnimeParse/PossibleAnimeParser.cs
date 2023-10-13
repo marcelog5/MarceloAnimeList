@@ -2,9 +2,9 @@
 
 namespace MarceloAnimeList.Service.Command.FileParse.AnimeParse
 {
-    public class PossibleAnimeParser : TemplateMediaParser<Anime>
+    public class PossibleAnimeParser : TemplateMediaParser<UserAnime>
     {
-        protected override Anime parseMediaLine(string line)
+        protected override UserAnime parseMediaLine(string line)
         {
             throw new NotImplementedException();
         }

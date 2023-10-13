@@ -2,6 +2,6 @@
 {
     public class Movie : Media
     {
-        public TimeSpan Duration { get; set; }
+        public TimeSpan? Duration { get; set; }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using MarceloAnimeList.Domain.Data.Entity;
+using MarceloAnimeList.Domain.Enum;
 
 namespace MarceloAnimeList.Service.Command.FileParse.AnimeParse
 {
-    public class PausedAnimeParser : TemplateMediaParser<Anime>
+    public class PausedAnimeParser : TemplateMediaParser<UserAnime>
     {
-        protected override Anime parseMediaLine(string line)
+        protected override UserAnime parseMediaLine(string line)
         {
             string[] parts = line.Split(new string[] { "ep:" }, StringSplitOptions.None);
 
@@ -16,12 +17,14 @@ namespace MarceloAnimeList.Service.Command.FileParse.AnimeParse
                 episode = int.Parse(parts[1].Trim());
 
             // Create an Anime object with the title
-            Anime anime = new Anime
+            UserAnime userAnime = new UserAnime
             {
-                Title = title
+                Anime = new Anime { Title = title},
+                Episode = episode,
+                Status = EnUserMediaStatus.StopWatching
             };
 
-            return anime;
+            return userAnime;
         }
     }
 }

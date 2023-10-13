@@ -5,6 +5,7 @@
 5-Comando Por voz
 6-ChatGpt pra busca
 7-interface Web contendo a lista de anime
+8-Interface de Gestão
 
 // futuros
 // flexibilidade pra qualquer tipo de conteúdo

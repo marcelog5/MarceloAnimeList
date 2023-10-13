@@ -2,6 +2,6 @@
 {
     public interface ICLICommand
     {
-        void Execute();
+        void Execute(string[] args);
     }
 }

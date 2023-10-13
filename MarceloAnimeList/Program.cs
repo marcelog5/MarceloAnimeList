@@ -1,15 +1,25 @@
 ﻿using Commom.DomainLayer.Command;
 using MarceloAnimeList.Commands.ImportAnimeList;
+using MarceloAnimeList.Domain.Data.Repository;
 using MarceloAnimeList.Domain.Service;
+using MarceloAnimeList.Infra._4._1_Data.Repository;
 using MarceloAnimeList.Service.Service;
+using Microsoft.Extensions.DependencyInjection;
 
 public class Program
 {
     private static void Main(string[] args)
     {
-        IFileService fileService = new FileService();
+        // Create a service collection.
+        var commandProvider = new ServiceCollection()
+            .AddTransient<ICLICommand, Import>()
+            .AddTransient<IFileService, FileService>()
+            .AddTransient<IUserRepository, UserRepository>()
+            .BuildServiceProvider();
 
-        ICLICommand import = new Import(fileService, args);
-        import.Execute();
+        // Resolve the service.
+        var import = commandProvider.GetRequiredService<ICLICommand>();
+
+        import.Execute(args);
     }
 }
