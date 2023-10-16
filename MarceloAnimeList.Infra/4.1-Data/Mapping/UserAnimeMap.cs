@@ -14,7 +14,6 @@ namespace MarceloAnimeList.Infra._4._1_Data.Mapping
 
             builder.Property(x => x.Status);
             builder.Property(x => x.Episode);
-            builder.Property(x => x.Season);
 
             builder.Property(x => x.CreatedAt);
             builder.Property(x => x.UpdatedAt);

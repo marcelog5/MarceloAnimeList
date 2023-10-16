@@ -12,6 +12,7 @@ namespace MarceloAnimeList.Infra._4._1_Data.Mapping
 
             builder.Property(x => x.EpisodeCount);
             builder.Property(x => x.Season);
+            builder.Property(x => x.Type);
         }
     }
 }
