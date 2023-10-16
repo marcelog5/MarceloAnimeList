@@ -5,7 +5,7 @@ namespace MarceloAnimeList.Service.Command.FileParse.AnimeParse
 {
     public class PausedAnimeParser : TemplateMediaParser<UserAnime>
     {
-        protected override UserAnime parseMediaLine(string line)
+        protected override List<UserAnime> parseMediaLine(string line)
         {
             string[] parts = line.Split(new string[] { "ep:" }, StringSplitOptions.None);
 
@@ -19,12 +19,17 @@ namespace MarceloAnimeList.Service.Command.FileParse.AnimeParse
             // Create an Anime object with the title
             UserAnime userAnime = new UserAnime
             {
-                Anime = new Anime { Title = title},
+                Anime = new Anime 
+                { 
+                    Title = title,
+                    Type = EnAnimeType.TVSeries,
+                    Season = 1
+                },
                 Episode = episode,
                 Status = EnUserMediaStatus.StopWatching
             };
 
-            return userAnime;
+            return new List<UserAnime>() { userAnime };
         }
     }
 }

@@ -10,31 +10,55 @@ namespace MarceloAnimeList.Service.Service
     {
         public List<Media> Parser(string content)
         {
-            var animes = ParseUserAnimeText(content);
+            var animes = ParseAnimeText(content);
             return new List<Media>();
         }
 
-        public static List<UserAnime> ParseUserAnimeText(string inputText)
+        public static List<UserAnime> ParseAnimeText(string inputText)
         {
             List<UserAnime> userAnimes = new List<UserAnime>();
 
-            var sectionParsers = new Dictionary<string, Type>
-            {
-                { "--animes em pausa--(.*?)--Animes assistidos--", typeof(PausedAnimeParser) },
-                { "--Animes assistidos--(.*?)-- filme de anime assistidos --", typeof(WatchedAnimeParser) },
-                { "-- animes possiveis --", typeof(PossibleAnimeParser) }
-            };
+            // Define regular expressions to match anime entries
+            string pausedAnimePattern = @"--animes em pausa--(.*?)--Animes assistidos--";
+            string watchedAnimePattern = @"--Animes assistidos--(.*?)-- filme de anime assistidos --";
+            string possibleAnimePattern = @"-- animes possiveis --";
 
-            foreach (var (pattern, parserType) in sectionParsers)
-            {
-                Match match = Regex.Match(inputText, pattern, RegexOptions.Singleline);
+            // Match paused and watched anime sections
+            Match pausedAnimeMatch = Regex.Match(inputText, pausedAnimePattern, RegexOptions.Singleline);
+            Match watchedAnimeMatch = Regex.Match(inputText, watchedAnimePattern, RegexOptions.Singleline);
+            Match possibleAnimeMatch = Regex.Match(inputText, possibleAnimePattern, RegexOptions.Singleline);
 
-                if (match.Success)
-                {
-                    string sectionText = match.Groups[1].Value;
-                    var parser = (IMediaParser<UserAnime>)Activator.CreateInstance(typeof(IMediaParser<>).MakeGenericType(parserType));
-                    userAnimes.AddRange(parser.HandleParser(sectionText));
-                }
+            if (pausedAnimeMatch.Success)
+            {
+                // Parse paused anime entries
+                string pausedAnimeText = pausedAnimeMatch.Groups[1].Value;
+
+                IMediaParser<UserAnime> pausedAnimeParser = new PausedAnimeParser();
+                var pausedAnimes = pausedAnimeParser.HandleParser(pausedAnimeText);
+
+                userAnimes.AddRange(pausedAnimes);
+            }
+
+            if (watchedAnimeMatch.Success)
+            {
+                // Parse paused anime entries
+                string watchedAnimeText = watchedAnimeMatch.Groups[1].Value;
+
+                IMediaParser<UserAnime> watchedAnimeParser = new WatchedAnimeParser();
+                var watchedAnimes = watchedAnimeParser.HandleParser(watchedAnimeText);
+
+                userAnimes.AddRange(watchedAnimes);
+            }
+
+            if (possibleAnimeMatch.Success)
+            {
+                // Parse paused anime entries
+                string possibleAnimeText = possibleAnimeMatch.Groups[1].Value;
+
+                IMediaParser<UserAnime> possibleAnimeParser = new PossibleAnimeParser();
+                var watchedAnimes = possibleAnimeParser.HandleParser(possibleAnimeText);
+
+                userAnimes.AddRange(watchedAnimes);
             }
 
             return userAnimes;

@@ -12,13 +12,13 @@
 
             foreach (var line in mediaLines)
             {
-                TMedia media = parseMediaLine(line.Replace("\r","").Replace("\t",""));
-                mediaList.Add(media);
+                List<TMedia> medias = parseMediaLine(line.Replace("\r","").Replace("\t",""));
+                medias.ForEach(m => mediaList.Add(m));
             }
 
             return mediaList;
         }
 
-        protected abstract TMedia parseMediaLine(string line);
+        protected abstract List<TMedia> parseMediaLine(string line);
     }
 }
