@@ -1,4 +1,6 @@
-﻿using MarceloAnimeList.Service.Command.UserAnimeComponents.Request;
+﻿using MarceloAnimeList.Domain.Command.UserAnimeComponents.Query;
+using MarceloAnimeList.Service.Command.UserAnimeComponents.Request;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,14 +11,24 @@ namespace MarceloAnimeList.API.Controllers
     [ApiController]
     public class UserAnimeController : ControllerBase
     {
+        private IMediator _mediator;
+
+        public UserAnimeController
+        (
+            IMediator mediator
+        )
+        {
+            _mediator = mediator;
+        }
+
         // GET: api/<UserAnimeController>
         [HttpGet]
-        public IEnumerable<string> Get
+        public async Task<GetUserAnimeQueryResult> Get
         (
             [FromRoute] GetUserAnimeRequest request
         )
         {
-            return new string[] { "value1", "value2" };
+            return await _mediator.Send(request);
         }
 
         // GET api/<UserAnimeController>/5
@@ -28,8 +40,9 @@ namespace MarceloAnimeList.API.Controllers
 
         // POST api/<UserAnimeController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task Post([FromBody] CreateUserAnimeRequest request)
         {
+            await _mediator.Send(request);
         }
 
         // PUT api/<UserAnimeController>/5

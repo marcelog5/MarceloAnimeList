@@ -1,5 +1,6 @@
 using AutoMapper;
-using MarceloAnimeList.Domain.Command.UserAnimeComponents;
+using MarceloAnimeList.Domain.Command.UserAnimeComponents.Command;
+using MarceloAnimeList.Domain.Command.UserAnimeComponents.Query;
 using MarceloAnimeList.Domain.Command.UserComponents;
 using MarceloAnimeList.Domain.Data.Entity;
 using MarceloAnimeList.Domain.Data.Repository;
@@ -9,6 +10,7 @@ using MarceloAnimeList.Infra._4._1_Data.Repository;
 using MarceloAnimeList.Service.Command.UserAnimeComponents.Request;
 using MarceloAnimeList.Service.Command.UserComponents.Request;
 using MarceloAnimeList.Service.Service;
+using MarceloAnimeList.Service.Service.HttpService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,12 +36,18 @@ builder.Services.AddSingleton<IMapper>(sp =>
         cfg.CreateMap<CreateUserCommand, User>();
         cfg.CreateMap<User, CreateUserCommandResponse>();
 
+        cfg.CreateMap<CreateUserAnimeRequest, CreateUserAnimeCommand>();
+
         cfg.CreateMap<GetUserAnimeRequest, GetUserAnimeQuery>();
         cfg.CreateMap<UserAnime, GetUserAnimeQueryResponse>();
     });
 
     return configuration.CreateMapper();
 });
+
+HttpClient httpClient = new MALHttpClientFactory().CreateClient("");
+MALHttpClient malHttpClient = new MALHttpClient(httpClient);
+builder.Services.AddSingleton(malHttpClient);
 
 // Read the connection string from appsettings.json
 IConfiguration DBConfig = builder.Configuration.GetSection("ConnectionStrings");

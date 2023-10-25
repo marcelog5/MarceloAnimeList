@@ -1,6 +1,12 @@
-﻿namespace MarceloAnimeList.Service.Command.UserAnimeComponents.Request
+﻿using MarceloAnimeList.Domain.Command.UserAnimeComponents.Command;
+using MediatR;
+
+namespace MarceloAnimeList.Service.Command.UserAnimeComponents.Request
 {
-    internal class CreateUserAnimeRequest
+    public class CreateUserAnimeRequest : IRequest<CreateUserAnimeCommandResult>
     {
+        public string AnimeName { get; set; }
+        public int Season { get; set; }
+        public int Episode { get; set; }
     }
 }

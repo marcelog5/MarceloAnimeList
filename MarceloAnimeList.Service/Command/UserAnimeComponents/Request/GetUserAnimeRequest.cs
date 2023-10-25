@@ -1,4 +1,4 @@
-﻿using MarceloAnimeList.Domain.Command.UserAnimeComponents;
+﻿using MarceloAnimeList.Domain.Command.UserAnimeComponents.Query;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

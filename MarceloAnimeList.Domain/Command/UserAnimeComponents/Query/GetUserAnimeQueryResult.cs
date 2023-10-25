@@ -1,6 +1,6 @@
 ﻿using Commom.DomainLayer.Query;
 
-namespace MarceloAnimeList.Domain.Command.UserAnimeComponents
+namespace MarceloAnimeList.Domain.Command.UserAnimeComponents.Query
 {
     public class GetUserAnimeQueryResult : IQueryResult<GetUserAnimeQueryResponse>
     {
