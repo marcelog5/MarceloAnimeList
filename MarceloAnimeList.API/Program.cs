@@ -1,17 +1,4 @@
-using AutoMapper;
-using MarceloAnimeList.Domain.Command.UserAnimeComponents.Command;
-using MarceloAnimeList.Domain.Command.UserAnimeComponents.Query;
-using MarceloAnimeList.Domain.Command.UserComponents;
-using MarceloAnimeList.Domain.Data.Entity;
-using MarceloAnimeList.Domain.Data.Repository;
-using MarceloAnimeList.Domain.Service;
-using MarceloAnimeList.Infra._4._1_Data;
-using MarceloAnimeList.Infra._4._1_Data.Repository;
-using MarceloAnimeList.Service.Command.UserAnimeComponents.Request;
-using MarceloAnimeList.Service.Command.UserComponents.Request;
-using MarceloAnimeList.Service.Service;
-using MarceloAnimeList.Service.Service.HttpService;
-using Microsoft.EntityFrameworkCore;
+using MarceloAnimeList.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,48 +9,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddMediatR(cfg => {
-    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
-    cfg.RegisterServicesFromAssembly(typeof(CreateUserRequest).Assembly);
-});
+builder.Services.AddConfiguration(builder.Configuration);
 
-// Mapp
-builder.Services.AddSingleton<IMapper>(sp =>
-{
-    var configuration = new MapperConfiguration(cfg =>
-    {
-        cfg.CreateMap<CreateUserRequest, CreateUserCommand>();
-        cfg.CreateMap<CreateUserCommand, User>();
-        cfg.CreateMap<User, CreateUserCommandResponse>();
+builder.Services.ConfigureMediator();
 
-        cfg.CreateMap<CreateUserAnimeRequest, CreateUserAnimeCommand>();
+builder.Services.ConfigureMapper();
 
-        cfg.CreateMap<GetUserAnimeRequest, GetUserAnimeQuery>();
-        cfg.CreateMap<UserAnime, GetUserAnimeQueryResponse>();
-    });
+builder.Services.ConfigureHttpClient();
 
-    return configuration.CreateMapper();
-});
+builder.Services.ConfigureDataBase();
 
-HttpClient httpClient = new MALHttpClientFactory().CreateClient("");
-MALHttpClient malHttpClient = new MALHttpClient(httpClient);
-builder.Services.AddSingleton(malHttpClient);
-
-// Read the connection string from appsettings.json
-IConfiguration DBConfig = builder.Configuration.GetSection("ConnectionStrings");
-// Configure DbContext using the connection string
-builder.Services.AddDbContext<DataContext>(options =>
-{
-    options.UseSqlServer(DBConfig.GetConnectionString("DefaultConnection"));
-}, ServiceLifetime.Scoped);
-
-// Repository
-builder.Services.AddTransient<IUserRepository, UserRepository>();
-builder.Services.AddTransient<IUserAnimeRepository, UserAnimeRepository>();
-
-// Services
-builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<IUserAnimeService, UserAnimeService>();
+builder.Services.ConfigureServices();
 
 var app = builder.Build();
 
