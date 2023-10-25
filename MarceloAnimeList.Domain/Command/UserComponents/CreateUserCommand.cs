@@ -1,6 +1,8 @@
-﻿namespace MarceloAnimeList.Domain.Command.UserComponents
+﻿using CarRare.Commom.DomainLayer.Command;
+
+namespace MarceloAnimeList.Domain.Command.UserComponents
 {
-    public class CreateUserCommand
+    public class CreateUserCommand : ICommandInput
     {
         public string Name { get; set; }
     }

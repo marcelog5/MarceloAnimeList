@@ -21,7 +21,7 @@ namespace MarceloAnimeList.Service.Service
             // Define regular expressions to match anime entries
             string pausedAnimePattern = @"--animes em pausa--(.*?)--Animes assistidos--";
             string watchedAnimePattern = @"--Animes assistidos--(.*?)-- filme de anime assistidos --";
-            string possibleAnimePattern = @"-- animes possiveis --";
+            string possibleAnimePattern = @"-- animes possiveis --(.*?)(--|$)";
 
             // Match paused and watched anime sections
             Match pausedAnimeMatch = Regex.Match(inputText, pausedAnimePattern, RegexOptions.Singleline);
@@ -56,9 +56,9 @@ namespace MarceloAnimeList.Service.Service
                 string possibleAnimeText = possibleAnimeMatch.Groups[1].Value;
 
                 IMediaParser<UserAnime> possibleAnimeParser = new PossibleAnimeParser();
-                var watchedAnimes = possibleAnimeParser.HandleParser(possibleAnimeText);
+                var possibleAnimes = possibleAnimeParser.HandleParser(possibleAnimeText);
 
-                userAnimes.AddRange(watchedAnimes);
+                userAnimes.AddRange(possibleAnimes);
             }
 
             return userAnimes;

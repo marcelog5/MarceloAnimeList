@@ -6,7 +6,7 @@ using MediatR;
 
 namespace MarceloAnimeList.Service.Command.UserComponents.Handler
 {
-    public class CreateUserHandler : IRequestHandler<CreateUserRequest, object>
+    public class CreateUserHandler : IRequestHandler<CreateUserRequest, CreateUserCommandResult>
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
@@ -21,7 +21,7 @@ namespace MarceloAnimeList.Service.Command.UserComponents.Handler
             _mapper = mapper;
         }
 
-        public async Task<object> Handle(CreateUserRequest request, CancellationToken cancellationToken)
+        public async Task<CreateUserCommandResult> Handle(CreateUserRequest request, CancellationToken cancellationToken)
         {
             var command = _mapper.Map<CreateUserCommand>(request);
 

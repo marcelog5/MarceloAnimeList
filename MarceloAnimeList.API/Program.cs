@@ -1,10 +1,12 @@
 using AutoMapper;
+using MarceloAnimeList.Domain.Command.UserAnimeComponents;
 using MarceloAnimeList.Domain.Command.UserComponents;
 using MarceloAnimeList.Domain.Data.Entity;
 using MarceloAnimeList.Domain.Data.Repository;
 using MarceloAnimeList.Domain.Service;
 using MarceloAnimeList.Infra._4._1_Data;
 using MarceloAnimeList.Infra._4._1_Data.Repository;
+using MarceloAnimeList.Service.Command.UserAnimeComponents.Request;
 using MarceloAnimeList.Service.Command.UserComponents.Request;
 using MarceloAnimeList.Service.Service;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +33,9 @@ builder.Services.AddSingleton<IMapper>(sp =>
         cfg.CreateMap<CreateUserRequest, CreateUserCommand>();
         cfg.CreateMap<CreateUserCommand, User>();
         cfg.CreateMap<User, CreateUserCommandResponse>();
+
+        cfg.CreateMap<GetUserAnimeRequest, GetUserAnimeQuery>();
+        cfg.CreateMap<UserAnime, GetUserAnimeQueryResponse>();
     });
 
     return configuration.CreateMapper();
@@ -46,9 +51,11 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 // Repository
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IUserAnimeRepository, UserAnimeRepository>();
 
 // Services
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IUserAnimeService, UserAnimeService>();
 
 var app = builder.Build();
 

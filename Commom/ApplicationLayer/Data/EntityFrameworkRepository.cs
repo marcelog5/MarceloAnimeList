@@ -1,6 +1,5 @@
 ﻿using CarRare.Commom.DomainLayer.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace CarRare.Commom.ApplicationLayer.Data
 {
@@ -15,12 +14,23 @@ namespace CarRare.Commom.ApplicationLayer.Data
             _dbContext = dbContext;
         }
 
-        public virtual async Task<IList<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
+        public virtual async Task<IList<TEntity>> GetAsync(
+            Func<IQueryable<TEntity>, IQueryable<TEntity>> filter,
+            CancellationToken cancellationToken = default)
         {
-            return await _dbContext.Set<TEntity>().Where(filter).ToListAsync(cancellationToken);
+            IQueryable<TEntity> query = _dbContext.Set<TEntity>();
+
+            if (filter != null)
+            {
+                query = filter(query);
+            }
+
+            return await query.ToListAsync(cancellationToken);
         }
 
-        public virtual async Task<TEntity> GetByIdAsync(TIdType id, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> GetByIdAsync(
+            TIdType id,
+            CancellationToken cancellationToken = default)
         {
             return await _dbContext.Set<TEntity>().FindAsync(id);
         }
@@ -32,7 +42,8 @@ namespace CarRare.Commom.ApplicationLayer.Data
                 _dbContext.Set<TEntity>().Add(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
                 return entity;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
