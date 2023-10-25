@@ -13,6 +13,7 @@ namespace MarceloAnimeList.Infra._4._1_Data.Mapping
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Name);
+            builder.Property(x => x.Password);
             builder.Property(x => x.Email);
 
             builder.Property(x => x.CreatedAt);

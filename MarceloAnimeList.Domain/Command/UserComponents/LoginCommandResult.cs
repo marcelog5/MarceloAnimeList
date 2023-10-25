@@ -2,10 +2,10 @@
 
 namespace MarceloAnimeList.Domain.Command.UserComponents
 {
-    public class CreateUserCommandResult : ICommandResult<CreateUserCommandResponse>
+    public class LoginCommandResult : ICommandResult<LoginCommandResponse>
     {
         public bool Success { get; set; }
-        public CreateUserCommandResponse? Result { get; set; }
+        public LoginCommandResponse? Result { get; set; }
         public string? ErrorMessage { get; set; }
         public IList<Exception>? exceptions { get; set; }
     }

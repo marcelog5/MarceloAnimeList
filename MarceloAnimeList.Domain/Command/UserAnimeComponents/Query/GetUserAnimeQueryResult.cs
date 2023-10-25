@@ -4,7 +4,7 @@ namespace MarceloAnimeList.Domain.Command.UserAnimeComponents.Query
 {
     public class GetUserAnimeQueryResult : IQueryResult<GetUserAnimeQueryResponse>
     {
-        public bool Sucess { get; set; }
+        public bool Success { get; set; }
         public string? ErrorMessage { get; set; }
         public IList<Exception>? exceptions { get; set; }
         public GetUserAnimeQueryResponse? Result { get; set; }

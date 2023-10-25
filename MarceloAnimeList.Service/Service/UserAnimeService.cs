@@ -48,7 +48,7 @@ namespace MarceloAnimeList.Service.Service
 
             return new GetUserAnimeQueryResult()
             {
-                Sucess = true,
+                Success = true,
                 Result = _mapper.Map<GetUserAnimeQueryResponse>(userAnimes)
             };
         }

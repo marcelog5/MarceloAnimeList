@@ -20,6 +20,7 @@ namespace MarceloAnimeList.Service.Command.UserAnimeComponents.Handler
             _userAnimeService = userAnimeService;
             _mapper = mapper;
         }
+
         public async Task<CreateUserAnimeCommandResult> Handle(CreateUserAnimeRequest request, CancellationToken cancellationToken)
         {
             var command = _mapper.Map<CreateUserAnimeCommand>(request);

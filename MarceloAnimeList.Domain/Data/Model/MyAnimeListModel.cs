@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MarceloAnimeList.Domain.Data.Model
+﻿namespace MarceloAnimeList.Domain.Data.Model
 {
     public class Pagination
     {

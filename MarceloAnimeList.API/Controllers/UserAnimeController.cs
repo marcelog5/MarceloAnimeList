@@ -31,30 +31,11 @@ namespace MarceloAnimeList.API.Controllers
             return await _mediator.Send(request);
         }
 
-        // GET api/<UserAnimeController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/<UserAnimeController>
         [HttpPost]
         public async Task Post([FromBody] CreateUserAnimeRequest request)
         {
             await _mediator.Send(request);
-        }
-
-        // PUT api/<UserAnimeController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<UserAnimeController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

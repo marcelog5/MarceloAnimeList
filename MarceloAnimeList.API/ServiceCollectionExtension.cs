@@ -44,6 +44,8 @@ namespace MarceloAnimeList.API
                     cfg.CreateMap<CreateUserCommand, User>();
                     cfg.CreateMap<User, CreateUserCommandResponse>();
 
+                    cfg.CreateMap<LoginRequest, LoginCommand>();
+
                     cfg.CreateMap<CreateUserAnimeRequest, CreateUserAnimeCommand>();
 
                     cfg.CreateMap<GetUserAnimeRequest, GetUserAnimeQuery>();

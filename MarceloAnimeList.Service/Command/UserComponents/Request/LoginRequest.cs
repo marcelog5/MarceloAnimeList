@@ -3,9 +3,8 @@ using MediatR;
 
 namespace MarceloAnimeList.Service.Command.UserComponents.Request
 {
-    public class CreateUserRequest : IRequest<CreateUserCommandResult>
+    public class LoginRequest : IRequest<LoginCommandResult>
     {
-        public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
     }
