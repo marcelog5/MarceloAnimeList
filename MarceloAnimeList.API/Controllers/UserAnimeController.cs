@@ -1,6 +1,7 @@
 ﻿using MarceloAnimeList.Domain.Command.UserAnimeComponents.Query;
 using MarceloAnimeList.Service.Command.UserAnimeComponents.Request;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace MarceloAnimeList.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Policy = "MALAuthPolicy")]
     [ApiController]
     public class UserAnimeController : ControllerBase
     {

@@ -4,14 +4,18 @@ using MarceloAnimeList.Domain.Command.UserAnimeComponents.Query;
 using MarceloAnimeList.Domain.Command.UserComponents;
 using MarceloAnimeList.Domain.Data.Entity;
 using MarceloAnimeList.Domain.Data.Repository;
-using MarceloAnimeList.Infra._4._1_Data.Repository;
+using MarceloAnimeList.Domain.Service;
 using MarceloAnimeList.Infra._4._1_Data;
+using MarceloAnimeList.Infra._4._1_Data.Repository;
 using MarceloAnimeList.Service.Command.UserAnimeComponents.Request;
 using MarceloAnimeList.Service.Command.UserComponents.Request;
-using MarceloAnimeList.Service.Service.HttpService;
-using Microsoft.EntityFrameworkCore;
-using MarceloAnimeList.Domain.Service;
+using MarceloAnimeList.Service.Policy;
 using MarceloAnimeList.Service.Service;
+using MarceloAnimeList.Service.Service.HttpService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace MarceloAnimeList.API
 {
@@ -82,6 +86,39 @@ namespace MarceloAnimeList.API
         {
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserAnimeService, UserAnimeService>();
+        }
+
+        public static void ConfigureJWT(this IServiceCollection services)
+        {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true, // Set to true if you want to validate the issuer (optional)
+                    ValidateAudience = true, // Set to true if you want to validate the audience (optional)
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourSecretKeyHere123456789012345678901234567890")),
+                    ValidateLifetime = true, // Set to true if you want to validate the token's expiration (optional)
+                    ClockSkew = TimeSpan.Zero // Set to TimeSpan.Zero to require the token to be valid at the exact expiration time (optional)
+                };
+            });
+
+        }
+
+        public static void ConfigureAuthorization(this IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("MALAuthPolicy", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.AddRequirements(new MALAuthorizationRequirement());
+                });
+            });
         }
     }
 }

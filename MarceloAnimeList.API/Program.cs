@@ -11,6 +11,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddConfiguration(builder.Configuration);
 
+builder.Services.ConfigureJWT();
+
+builder.Services.ConfigureAuthorization();
+
 builder.Services.ConfigureMediator();
 
 builder.Services.ConfigureMapper();
@@ -33,6 +37,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseAuthentication();
 
 app.MapControllers();
 

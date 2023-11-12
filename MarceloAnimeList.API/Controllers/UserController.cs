@@ -1,5 +1,6 @@
 ﻿using MarceloAnimeList.Service.Command.UserComponents.Request;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace MarceloAnimeList.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -22,6 +24,7 @@ namespace MarceloAnimeList.API.Controllers
 
         // POST api/<UserController>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Post([FromBody] CreateUserRequest request)
         {
             await _mediator.Send(request);
@@ -31,6 +34,7 @@ namespace MarceloAnimeList.API.Controllers
 
         // POST api/<UserController>
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<object> Login([FromBody] LoginRequest request)
         {
             return await _mediator.Send(request);
