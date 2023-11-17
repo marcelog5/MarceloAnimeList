@@ -5,6 +5,7 @@ using MarceloAnimeList.Domain.Command.UserComponents;
 using MarceloAnimeList.Domain.Data.Entity;
 using MarceloAnimeList.Domain.Data.Repository;
 using MarceloAnimeList.Domain.Service;
+using MarceloAnimeList.Domain.Util;
 using MarceloAnimeList.Infra._4._1_Data;
 using MarceloAnimeList.Infra._4._1_Data.Repository;
 using MarceloAnimeList.Service.Command.UserAnimeComponents.Request;
@@ -12,6 +13,7 @@ using MarceloAnimeList.Service.Command.UserComponents.Request;
 using MarceloAnimeList.Service.Policy;
 using MarceloAnimeList.Service.Service;
 using MarceloAnimeList.Service.Service.HttpService;
+using MarceloAnimeList.Service.Util;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -84,6 +86,8 @@ namespace MarceloAnimeList.API
 
         public static void ConfigureServices(this IServiceCollection services)
         {
+            services.AddTransient<IUserUtil, UserUtil>();
+
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserAnimeService, UserAnimeService>();
         }
@@ -98,12 +102,12 @@ namespace MarceloAnimeList.API
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true, // Set to true if you want to validate the issuer (optional)
-                    ValidateAudience = true, // Set to true if you want to validate the audience (optional)
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourSecretKeyHere123456789012345678901234567890")),
-                    ValidateLifetime = true, // Set to true if you want to validate the token's expiration (optional)
-                    ClockSkew = TimeSpan.Zero // Set to TimeSpan.Zero to require the token to be valid at the exact expiration time (optional)
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
                 };
             });
 
@@ -116,7 +120,7 @@ namespace MarceloAnimeList.API
                 options.AddPolicy("MALAuthPolicy", policy =>
                 {
                     policy.RequireAuthenticatedUser();
-                    policy.AddRequirements(new MALAuthorizationRequirement());
+                    // Add other requirements as needed
                 });
             });
         }

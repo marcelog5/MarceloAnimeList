@@ -2,9 +2,11 @@
 using MarceloAnimeList.Domain.Command.UserAnimeComponents.Command;
 using MarceloAnimeList.Domain.Command.UserAnimeComponents.Query;
 using MarceloAnimeList.Domain.Data.Entity;
+using MarceloAnimeList.Domain.Data.Model;
 using MarceloAnimeList.Domain.Data.Repository;
 using MarceloAnimeList.Domain.Enum;
 using MarceloAnimeList.Domain.Service;
+using MarceloAnimeList.Domain.Util;
 using MarceloAnimeList.Service.Service.HttpService;
 
 namespace MarceloAnimeList.Service.Service
@@ -14,22 +16,39 @@ namespace MarceloAnimeList.Service.Service
         private MALHttpClient _httpClient;
         private readonly IUserAnimeRepository _userAnimeRepository;
         private readonly IMapper _mapper;
+        private readonly IUserUtil _userUtil;
 
         public UserAnimeService
         (
             MALHttpClient httpClient,
             IUserAnimeRepository userAnimeRepository,
-            IMapper mapper
+            IMapper mapper,
+            IUserUtil userUtil
         )
         {
             _httpClient = httpClient;
             _userAnimeRepository = userAnimeRepository;
             _mapper = mapper;
+            _userUtil = userUtil;
         }
 
         public async Task<CreateUserAnimeCommandResult> Create(CreateUserAnimeCommand command)
         {
-            var anime = await _httpClient.GetAnime("Boku dake ga Inai Machi");
+            MyAnimeListModel anime = await _httpClient.GetAnime("Boku dake ga Inai Machi");
+
+            if ( anime == null )
+            {
+                return new CreateUserAnimeCommandResult()
+                {
+                    Success = false,
+                    ErrorMessage = "ANIME_NOT_FOUND"
+                };
+            }
+
+            User user = _userUtil.GetCurrentUser();
+
+            UserAnime userAnime = new UserAnime();
+            userAnime.User = user;
 
             throw new NotImplementedException();
         }

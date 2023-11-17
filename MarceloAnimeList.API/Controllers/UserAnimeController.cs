@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace MarceloAnimeList.API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Policy = "MALAuthPolicy")]
     [ApiController]
     public class UserAnimeController : ControllerBase
     {
@@ -25,6 +24,7 @@ namespace MarceloAnimeList.API.Controllers
 
         // GET: api/<UserAnimeController>
         [HttpGet]
+        [Authorize(Policy = "MALAuthPolicy")]
         public async Task<GetUserAnimeQueryResult> Get
         (
             [FromRoute] GetUserAnimeRequest request
@@ -35,6 +35,7 @@ namespace MarceloAnimeList.API.Controllers
 
         // POST api/<UserAnimeController>
         [HttpPost]
+        [Authorize(Policy = "MALAuthPolicy")]
         public async Task Post([FromBody] CreateUserAnimeRequest request)
         {
             await _mediator.Send(request);
