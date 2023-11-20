@@ -3,6 +3,7 @@ using MarceloAnimeList.Domain.Command.UserAnimeComponents.Command;
 using MarceloAnimeList.Domain.Command.UserAnimeComponents.Query;
 using MarceloAnimeList.Domain.Command.UserComponents;
 using MarceloAnimeList.Domain.Data.Entity;
+using MarceloAnimeList.Domain.Data.Model;
 using MarceloAnimeList.Domain.Data.Repository;
 using MarceloAnimeList.Domain.Service;
 using MarceloAnimeList.Domain.Util;
@@ -10,7 +11,6 @@ using MarceloAnimeList.Infra._4._1_Data;
 using MarceloAnimeList.Infra._4._1_Data.Repository;
 using MarceloAnimeList.Service.Command.UserAnimeComponents.Request;
 using MarceloAnimeList.Service.Command.UserComponents.Request;
-using MarceloAnimeList.Service.Policy;
 using MarceloAnimeList.Service.Service;
 using MarceloAnimeList.Service.Service.HttpService;
 using MarceloAnimeList.Service.Util;
@@ -56,6 +56,15 @@ namespace MarceloAnimeList.API
 
                     cfg.CreateMap<GetUserAnimeRequest, GetUserAnimeQuery>();
                     cfg.CreateMap<UserAnime, GetUserAnimeQueryResponse>();
+
+                    cfg.CreateMap<UserAnime, CreateUserAnimeCommandResponse>();
+                    cfg.CreateMap<MyAnimeListModelData, Anime>()
+                    .ForMember(d => d.Title, o => o.MapFrom(s => s.title))
+                    .ForMember(d => d.ReleaseDate, o => o.MapFrom(s => s.aired.from))
+                    .ForMember(d => d.EpisodeCount, o => o.MapFrom(s => s.episodes))
+                    .ForMember(d => d.Type, o => o.Ignore())
+                    .ForMember(d => d.Status, o => o.Ignore())
+                    .ForMember(d => d.Season, o => o.Ignore());
                 });
 
                 return configuration.CreateMapper();
@@ -81,6 +90,7 @@ namespace MarceloAnimeList.API
 
             // Repository
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IAnimeRepository, AnimeRepository>();
             services.AddTransient<IUserAnimeRepository, UserAnimeRepository>();
         }
 

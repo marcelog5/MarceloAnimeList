@@ -3,6 +3,7 @@ using MarceloAnimeList.Domain.Command.UserComponents;
 using MarceloAnimeList.Domain.Data.Entity;
 using MarceloAnimeList.Domain.Data.Repository;
 using MarceloAnimeList.Domain.Service;
+using MarceloAnimeList.Domain.Util;
 using MarceloAnimeList.Service.Util;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,14 +16,17 @@ namespace MarceloAnimeList.Service.Service
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IUserUtil _userUtil;
 
         public UserService
         (
             IUserRepository userRepository,
+            IUserUtil userUtil,
             IMapper mapper
         )
         {
             _userRepository = userRepository;
+            _userUtil = userUtil;
             _mapper = mapper;
         }
 
@@ -30,7 +34,7 @@ namespace MarceloAnimeList.Service.Service
         {
             User user = _mapper.Map<User>(command);
 
-            user.Password = UserUtil.HashPassword(command.Password);
+            user.Password = _userUtil.GetHashPassword(command.Password);
 
             await _userRepository.CreateAsync(user);
 
@@ -43,7 +47,7 @@ namespace MarceloAnimeList.Service.Service
 
         public async Task<LoginCommandResult> Login(LoginCommand command)
         {
-            var password = UserUtil.HashPassword(command.Password);
+            var password = _userUtil.GetHashPassword(command.Password);
 
             Func<IQueryable<User>, IQueryable<User>> filter = f => f.Where(u => u.Email == command.Email
                                                                              && u.Password == password);

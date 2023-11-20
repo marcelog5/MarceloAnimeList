@@ -123,10 +123,10 @@
     public class MyAnimeListModel
     {
         public Pagination pagination { get; set; }
-        public List<Data> data { get; set; }
+        public List<MyAnimeListModelData> data { get; set; }
     }
 
-    public class Data
+    public class MyAnimeListModelData
     {
         public int mal_id { get; set; }
         public string url { get; set; }

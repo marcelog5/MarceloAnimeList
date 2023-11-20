@@ -2,5 +2,6 @@
 {
     public class CreateUserAnimeCommandResponse
     {
+        public Guid Id { get; set; }
     }
 }

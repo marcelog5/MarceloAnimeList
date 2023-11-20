@@ -2,18 +2,18 @@
 {
     public enum EnMediaGenreType
     {
-        Action = 1,
+        Other = 1,
         Adventure = 2,
-        Comedy = 4,
-        Drama = 8,
-        Fantasy = 16,
-        Horror = 32,
-        Mystery = 64,
-        Romance = 128,
-        SciFi = 256,
-        SliceOfLife = 512,
-        Sports = 1024,
-        Thriller = 2048,
-        Other = 4096
+        Comedy = 3,
+        Drama = 4,
+        Fantasy = 5,
+        Horror = 6,
+        Mystery = 7,
+        Romance = 8,
+        SciFi = 9,
+        SliceOfLife = 10,
+        Sports = 11,
+        Thriller = 12,
+        Action = 13,
     }
 }
