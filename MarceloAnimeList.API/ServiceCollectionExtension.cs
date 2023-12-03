@@ -16,6 +16,7 @@ using MarceloAnimeList.Service.Service.HttpService;
 using MarceloAnimeList.Service.Util;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -85,11 +86,12 @@ namespace MarceloAnimeList.API
         {
             // Read the connection string from appsettings.json
             IConfiguration DBConfig = _configuration.GetSection("ConnectionStrings");
+
+            Console.WriteLine(DBConfig.GetConnectionString("DefaultConnection"));
+
             // Configure DbContext using the connection string
             services.AddDbContext<DataContext>(options =>
-            {
-                options.UseSqlServer(DBConfig.GetConnectionString("DefaultConnection"));
-            }, ServiceLifetime.Scoped);
+                options.UseSqlServer(DBConfig.GetConnectionString("DefaultConnection")));
 
             // Repository
             services.AddTransient<IUserRepository, UserRepository>();

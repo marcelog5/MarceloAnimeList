@@ -12,7 +12,7 @@ namespace MarceloAnimeList.Infra._4._1_Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost,1433;Database=;User=sa;Password=P@ssw0rd#2023;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=sql-server-container,1433;Database=MAL;User=sa;Password=P@ssw0rd#2023;TrustServerCertificate=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
