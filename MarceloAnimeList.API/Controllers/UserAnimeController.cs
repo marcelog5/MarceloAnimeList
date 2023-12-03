@@ -1,5 +1,6 @@
 ﻿using MarceloAnimeList.Domain.Command.UserAnimeComponents.Query;
 using MarceloAnimeList.Service.Command.UserAnimeComponents.Request;
+using MarceloAnimeList.Service.Command.UserAnimeComponents.Request.UpdateUserAnime;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +38,14 @@ namespace MarceloAnimeList.API.Controllers
         [HttpPost]
         [Authorize(Policy = "MALAuthPolicy")]
         public async Task Post([FromBody] CreateUserAnimeRequest request)
+        {
+            await _mediator.Send(request);
+        }
+
+        // POST api/<UserAnimeController>
+        [HttpPatch("{id}")]
+        [Authorize(Policy = "MALAuthPolicy")]
+        public async Task Put([FromRoute] UpdateUserAnimeRequest request)
         {
             await _mediator.Send(request);
         }

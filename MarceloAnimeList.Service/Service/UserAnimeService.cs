@@ -8,12 +8,13 @@ using MarceloAnimeList.Domain.Enum;
 using MarceloAnimeList.Domain.Service;
 using MarceloAnimeList.Domain.Util;
 using MarceloAnimeList.Service.Service.HttpService;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarceloAnimeList.Service.Service
 {
     public class UserAnimeService : IUserAnimeService
     {
-        private MALHttpClient _httpClient;
+        private readonly MALHttpClient _httpClient;
         private readonly IUserAnimeRepository _userAnimeRepository;
         private readonly IAnimeRepository _animeRepository;
         private readonly IMapper _mapper;
@@ -142,15 +143,19 @@ namespace MarceloAnimeList.Service.Service
             if (query.WeeklyAnime != null)
             {
                 filter = f => f.Where(ua => ua.Anime.Status == EnMediaStatus.Airing
-                                         && ua.Status == EnUserMediaStatus.CurrentlyWatching);
+                                         && ua.Status == EnUserMediaStatus.CurrentlyWatching)
+                                .Include(ua => ua.Anime);
             }
 
-            var userAnimes = await _userAnimeRepository.GetAsync(filter);
+            IList<UserAnime> userAnimes = await _userAnimeRepository.GetAsync(filter);
 
             return new GetUserAnimeQueryResult()
             {
                 Success = true,
-                Result = _mapper.Map<GetUserAnimeQueryResponse>(userAnimes)
+                Result = new GetUserAnimeQueryResponse()
+                {
+                    UserAnimes = _mapper.Map<List<UserAnimeResponse>>(userAnimes),
+                }
             };
         }
     }

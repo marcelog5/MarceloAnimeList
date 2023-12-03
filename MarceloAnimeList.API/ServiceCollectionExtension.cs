@@ -65,6 +65,9 @@ namespace MarceloAnimeList.API
                     .ForMember(d => d.Type, o => o.Ignore())
                     .ForMember(d => d.Status, o => o.Ignore())
                     .ForMember(d => d.Season, o => o.Ignore());
+
+                    cfg.CreateMap<UserAnime, UserAnimeResponse>()
+                    .ForPath(d => d.Title, o => o.MapFrom(s => s.Anime.Title));
                 });
 
                 return configuration.CreateMapper();
