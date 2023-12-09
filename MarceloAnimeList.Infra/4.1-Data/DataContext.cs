@@ -6,14 +6,7 @@ namespace MarceloAnimeList.Infra._4._1_Data
 {
     public class DataContext : DbContext
     {
-        public DataContext() : base() { }
-
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=sql-server-container,1433;Database=MAL;User=sa;Password=P@ssw0rd#2023;TrustServerCertificate=True;");
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

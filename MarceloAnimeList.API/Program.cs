@@ -25,7 +25,7 @@ builder.Services.ConfigureMapper();
 
 builder.Services.ConfigureHttpClient();
 
-builder.Services.ConfigureDataBase();
+builder.Services.ConfigureDataBase(builder.Configuration);
 
 builder.Services.ConfigureServices();
 

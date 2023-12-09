@@ -82,16 +82,10 @@ namespace MarceloAnimeList.API
             services.AddSingleton(malHttpClient);
         }
 
-        public static void ConfigureDataBase(this IServiceCollection services)
+        public static void ConfigureDataBase(this IServiceCollection services, IConfiguration configuration)
         {
-            // Read the connection string from appsettings.json
-            IConfiguration DBConfig = _configuration.GetSection("ConnectionStrings");
-
-            Console.WriteLine(DBConfig.GetConnectionString("DefaultConnection"));
-
-            // Configure DbContext using the connection string
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(DBConfig.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             // Repository
             services.AddTransient<IUserRepository, UserRepository>();
