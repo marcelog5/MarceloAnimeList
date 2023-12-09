@@ -1,4 +1,4 @@
-﻿using CarRare.Commom.DomainLayer.Command;
+﻿using CarRare.Common.DomainLayer.Command;
 
 namespace MarceloAnimeList.Domain.Command.UserComponents
 {

@@ -1,4 +1,4 @@
-﻿using CarRare.Commom.ApplicationLayer.Data;
+﻿using CarRare.Common.ApplicationLayer.Data;
 using MarceloAnimeList.Domain.Data.Entity;
 using MarceloAnimeList.Domain.Data.Repository;
 

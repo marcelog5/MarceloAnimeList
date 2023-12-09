@@ -1,4 +1,4 @@
-﻿using CarRare.Commom.DomainLayer.Data;
+﻿using CarRare.Common.DomainLayer.Data;
 
 namespace MarceloAnimeList.Domain.Data.Entity
 {

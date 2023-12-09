@@ -1,4 +1,4 @@
-﻿namespace CarRare.Commom.DomainLayer.Data
+﻿namespace CarRare.Common.DomainLayer.Data
 {
     public interface IRepository<TEntity, TIdType>
         where TEntity : class

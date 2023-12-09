@@ -1,7 +1,7 @@
-﻿using CarRare.Commom.DomainLayer.Data;
+﻿using CarRare.Common.DomainLayer.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace CarRare.Commom.ApplicationLayer.Data
+namespace CarRare.Common.ApplicationLayer.Data
 {
     public abstract class EntityFrameworkRepository<TEntity, TIdType> : IRepository<TEntity, TIdType>
         where TEntity : class

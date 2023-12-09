@@ -1,4 +1,4 @@
-﻿namespace Commom.DomainLayer.Command
+﻿namespace Common.DomainLayer.Command
 {
     public interface ICLICommand
     {

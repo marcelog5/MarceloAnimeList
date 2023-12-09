@@ -1,4 +1,4 @@
-﻿using Commom.DomainLayer.Query;
+﻿using Common.DomainLayer.Query;
 
 namespace MarceloAnimeList.Domain.Command.UserAnimeComponents.Query
 {

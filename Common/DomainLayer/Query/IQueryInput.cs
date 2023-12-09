@@ -1,4 +1,4 @@
-﻿namespace Commom.DomainLayer.Query
+﻿namespace Common.DomainLayer.Query
 {
     public interface IQueryInput
     {

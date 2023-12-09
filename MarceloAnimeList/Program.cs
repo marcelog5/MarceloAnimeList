@@ -1,4 +1,4 @@
-﻿using Commom.DomainLayer.Command;
+﻿using Common.DomainLayer.Command;
 using MarceloAnimeList.Commands.ImportAnimeList;
 using MarceloAnimeList.Domain.Data.Repository;
 using MarceloAnimeList.Domain.Service;

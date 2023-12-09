@@ -1,4 +1,4 @@
-﻿using Commom.DomainLayer.Command;
+﻿using Common.DomainLayer.Command;
 using MarceloAnimeList.Domain.Data.Entity;
 using MarceloAnimeList.Domain.Service;
 using System.Text;

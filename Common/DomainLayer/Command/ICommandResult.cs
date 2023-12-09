@@ -1,4 +1,4 @@
-﻿namespace CarRare.Commom.DomainLayer.Command
+﻿namespace CarRare.Common.DomainLayer.Command
 {
     public interface ICommandResult<TResponse>
     {
