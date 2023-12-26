@@ -6,6 +6,7 @@ namespace MarceloAnimeList.Domain.Service
     public interface IUserAnimeService
     {
         Task<CreateUserAnimeCommandResult> Create(CreateUserAnimeCommand command);
+        Task<UpdateUserAnimeCommandResult> Update(UpdateUserAnimeCommand command);
         Task<GetUserAnimeQueryResult> Get(GetUserAnimeQuery query);
     }
 }

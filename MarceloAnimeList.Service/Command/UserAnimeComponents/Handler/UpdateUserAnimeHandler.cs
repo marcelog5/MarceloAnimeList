@@ -1,18 +1,33 @@
-﻿using MarceloAnimeList.Service.Command.UserAnimeComponents.Request.UpdateUserAnime;
+﻿using AutoMapper;
+using MarceloAnimeList.Domain.Command.UserAnimeComponents.Command;
+using MarceloAnimeList.Domain.Service;
+using MarceloAnimeList.Service.Command.UserAnimeComponents.Request.UpdateUserAnime;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarceloAnimeList.Service.Command.UserAnimeComponents.Handler
 {
-    public class UpdateUserAnimeHandler : IRequestHandler<UpdateUserAnimeRequest, object>
+    public class UpdateUserAnimeHandler : IRequestHandler<UpdateUserAnimeRequest, UpdateUserAnimeCommandResult>
     {
-        public Task<object> Handle(UpdateUserAnimeRequest request, CancellationToken cancellationToken)
+        private readonly IUserAnimeService _userAnimeService;
+        private readonly IMapper _mapper;
+
+        public UpdateUserAnimeHandler
+        (
+            IUserAnimeService userAnimeService,
+            IMapper mapper
+        )
         {
-            throw new NotImplementedException();
+            _userAnimeService = userAnimeService;
+            _mapper = mapper;
+        }
+
+        public async Task<UpdateUserAnimeCommandResult> Handle(UpdateUserAnimeRequest request, CancellationToken cancellationToken)
+        {
+            var command = _mapper.Map<UpdateUserAnimeCommand>(request.Configuration);
+
+            var result = await _userAnimeService.Update(command);
+
+            return result;
         }
     }
 }

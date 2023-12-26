@@ -8,7 +8,7 @@ namespace MarceloAnimeList.Domain.Data.Entity
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
         public bool Active { get; set; } = true;
         public ICollection<Rating>? Ratings { get; set; }

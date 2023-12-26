@@ -10,7 +10,7 @@ namespace MarceloAnimeList.Domain.Data.Entity
         public EnMediaGenreType? Genre { get; set; } = EnMediaGenreType.Other;
         public EnMediaStatus? Status { get; set; }
         public DateTime? ReleaseDate { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
         public bool Active { get; set; } = true;
         public ICollection<Rating>? Ratings { get; set; }

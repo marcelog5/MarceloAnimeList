@@ -24,7 +24,7 @@ docker-compose build
 or create a database in docker with the command:
 
 ```bash
-docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=P@ssw0rd#2023" -p 1433:1433 --name sql-server-local-container -d mcr.microsoft.com/mssql/server
+docker run -e "POSTGRES_PASSWORD=P@ssw0rd#2023" -p 5432:5432 --name postgres-local-container -d postgres:latest
 ```
 
 then run visual studio 22

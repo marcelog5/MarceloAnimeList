@@ -4,7 +4,6 @@ using MarceloAnimeList.Domain.Data.Entity;
 using MarceloAnimeList.Domain.Data.Repository;
 using MarceloAnimeList.Domain.Service;
 using MarceloAnimeList.Domain.Util;
-using MarceloAnimeList.Service.Util;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

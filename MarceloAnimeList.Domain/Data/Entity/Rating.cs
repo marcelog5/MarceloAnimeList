@@ -11,7 +11,7 @@ namespace MarceloAnimeList.Domain.Data.Entity
         public string? Comment { get; set; }
         public Guid MediaId { get; set; }
         public Guid UserId { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
         public bool Active { get; set; } = true;
         public virtual User User { get; set; }

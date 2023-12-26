@@ -10,13 +10,13 @@ using MarceloAnimeList.Domain.Util;
 using MarceloAnimeList.Infra._4._1_Data;
 using MarceloAnimeList.Infra._4._1_Data.Repository;
 using MarceloAnimeList.Service.Command.UserAnimeComponents.Request;
+using MarceloAnimeList.Service.Command.UserAnimeComponents.Request.UpdateUserAnime;
 using MarceloAnimeList.Service.Command.UserComponents.Request;
 using MarceloAnimeList.Service.Service;
 using MarceloAnimeList.Service.Service.HttpService;
 using MarceloAnimeList.Service.Util;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -85,7 +85,7 @@ namespace MarceloAnimeList.API
         public static void ConfigureDataBase(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
             // Repository
             services.AddTransient<IUserRepository, UserRepository>();

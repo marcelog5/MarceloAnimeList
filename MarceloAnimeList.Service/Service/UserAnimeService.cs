@@ -138,7 +138,7 @@ namespace MarceloAnimeList.Service.Service
 
         public async Task<GetUserAnimeQueryResult> Get(GetUserAnimeQuery query)
         {
-            Func<IQueryable<UserAnime>, IQueryable<UserAnime>> filter = null;
+            Func<IQueryable<UserAnime>, IQueryable<UserAnime>> filter = f => f.Include(ua => ua.Anime);
 
             if (query.WeeklyAnime != null)
             {
@@ -157,6 +157,11 @@ namespace MarceloAnimeList.Service.Service
                     UserAnimes = _mapper.Map<List<UserAnimeResponse>>(userAnimes),
                 }
             };
+        }
+
+        public async Task<UpdateUserAnimeCommandResult> Update(UpdateUserAnimeCommand command)
+        {
+            throw new NotImplementedException();
         }
     }
 }

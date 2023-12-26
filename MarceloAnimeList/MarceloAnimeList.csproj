@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MarceloAnimeList.Service\MarceloAnimeList.Service.csproj" />
+    <ProjectReference Include="..\MarceloAnimeList.Infra\MarceloAnimeList.Infra.csproj" />
   </ItemGroup>
 
 </Project>
